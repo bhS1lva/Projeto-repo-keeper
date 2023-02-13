@@ -10,7 +10,7 @@
 	}>();
 
     async function onSubmit() {
-        const searchRepo = await fetch(`https://api.github.com/users/${username}/repos`);
+        const searchRepo = await fetch(`https://api.github.com/users/${username.trim()}/repos`);
         
         if(searchRepo.ok) {
             status = searchRepo.status;
@@ -20,7 +20,8 @@
                 return {
                     name: data.name,
                     url: data.html_url,
-                    owner: data.owner.login
+                    owner: data.owner.login,
+                    id: data.id
                 } as IRepository
             });
 
@@ -46,5 +47,19 @@
     <code>Usuário não encontrado!</code>
 {/if}
 <style>
+    input, button {
+        font-family: inherit;
+        font-size: inherit;
+        padding: 0.4em;
+        margin: 0 0 0.5em 0;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+    }
 
+    button {
+        color: #333;
+        background-color: #f4f4f4;
+        outline: none;
+    }
 </style>

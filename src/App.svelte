@@ -13,7 +13,7 @@
 
 <main>
 	<header><SearchBar on:Response={filter}/></header>
-	<div><Repositories bind:repos/></div>
+	<div><Repositories repositories={repos}/></div>
 </main>
 
 <style>
