@@ -1,30 +1,21 @@
 <script lang="ts">
-	export let name: string;
+
+    import Repositories from "./components/Repositories/Repositories.svelte";
+    import SearchBar from "./components/SearchBar/SearchBar.svelte";
+    import type IRepository from "./interfaces/IRepository";
+
+	let repos: IRepository[];
+
+	function filter(event: CustomEvent<IRepository[]>) {
+		repos = event.detail
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<header><SearchBar on:Response={filter}/></header>
+	<div><Repositories bind:repos/></div>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
