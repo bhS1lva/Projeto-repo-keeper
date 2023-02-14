@@ -43,6 +43,7 @@
     >
     <button type="submit">Pesquisar</button>
 </form>
+
 {#if status === 404}
     <code>Usuário não encontrado!</code>
 {/if}
