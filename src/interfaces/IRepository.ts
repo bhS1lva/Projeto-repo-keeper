@@ -1,6 +1,7 @@
 export default interface IRepository {
+    id: number,
     name: string,
     url: string,
     owner: string,
-    id: number
+    onList: boolean
 }
