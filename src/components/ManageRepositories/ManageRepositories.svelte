@@ -1,26 +1,37 @@
 <script lang="ts">
+    import { check_outros } from "svelte/internal";
+    import { slide } from "svelte/types/runtime/transition";
     import type IRepository from "../../interfaces/IRepository";
     import ListRepositories from "../ListRepositories/ListRepositories.svelte";
 
     export let allRepositories: IRepository[] | null = null;
 
     allRepositories = [
-        {name: 'projeto1', url:'www.google.com', owner: 'bhS1lva', id:1, onList: false},
-        {name: 'projeto2', url:'www.google.com', owner: 'bhS1lva', id:2, onList: false},
-        {name: 'projeto3', url:'www.google.com', owner: 'bhS1lva', id:3, onList: false}
+        {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: false},
+        {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: false},
+        {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: false}
     ]
 
     let selectedRepos: IRepository[] = [];
+    
+    function addOrRemoveFromList(repo: IRepository, mode: boolean) {
+        allRepositories.map((item, index) => {
+            if(item.id === repo.id){
+                allRepositories[index] = {...repo, onList: mode}
+                if(mode){
+                    selectedRepos = [...selectedRepos, {...repo, onList: true}]
+                } else {
+                    selectedRepos = selectedRepos.filter(item => item.id !== repo.id)
+                }
+            }
+        })
+    }
 
     function manageList(repo: IRepository){
-        const index = selectedRepos.findIndex(item => (item.id === repo.id));
-
-        if(index === -1){
-            selectedRepos = [...selectedRepos, repo];
+        if(repo.onList){
+            addOrRemoveFromList(repo, false)//false to remove item from the list
         } else {
-            selectedRepos.splice(index, 1);
-            //this reassignment was made to trigger the reactivity of svelte
-            selectedRepos = selectedRepos;
+            addOrRemoveFromList(repo, true)//true to add item on the list
         }
     }
 
@@ -31,7 +42,7 @@
         <ListRepositories
             title="{allRepositories[0].owner} repositories"
             lista={allRepositories}
-            on:Response={(event) => {manageList(event.detail)}}
+            on:Click={(event) => {manageList(event.detail)}}
         />
     {/if}
     
@@ -39,7 +50,7 @@
         <ListRepositories
             title="Saved repositories"
             lista={selectedRepos}
-            on:Response={(event) => {manageList(event.detail)}}
+            on:Click={(event) => {manageList(event.detail)}}
         />
     {/if}
 </div>

@@ -7,19 +7,23 @@
 
 </script>
 
-<div>
+<div class="box">
 
     <h2>{title}</h2>
    
     {#each lista as item}
         <Repository
             repo={item}
-            on:Response
+            on:Click
             />
     {/each}
 
 </div>
 
 <style>
-    
+    .box{
+        border: 1px solid;
+        display: inline-flex;
+        flex-direction: column;
+    }
 </style>

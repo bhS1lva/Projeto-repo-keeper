@@ -5,9 +5,8 @@
     export let repo: IRepository;
 
     const dispatch = createEventDispatcher<{
-		Response: IRepository;
+		Click: IRepository
 	}>();
-
 
 </script>
 
@@ -19,7 +18,7 @@
     <button 
         class="button"
         class:remove-button={repo.onList} 
-        on:click={() => dispatch('Response', repo)}>
+        on:click={() => dispatch('Click', repo)}>
         +
     </button>
 </div>

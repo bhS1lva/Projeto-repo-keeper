@@ -21,7 +21,8 @@
                     name: data.name,
                     url: data.html_url,
                     owner: data.owner.login,
-                    id: data.id
+                    id: data.id,
+                    onList: false
                 } as IRepository
             });
 
