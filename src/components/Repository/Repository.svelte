@@ -1,24 +1,24 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
+
     import type IRepository from "../../interfaces/IRepository";
 
     export let repo: IRepository;
 
     const dispatch = createEventDispatcher<{
-		Click: IRepository
+		buttonClick: IRepository
 	}>();
 
 </script>
 
-<div class="box">
+<div>
     <p>
-        <a href={repo.url}>{repo.name}</a>
+        <a href={repo.url} target="_blank" rel="noreferrer">{repo.name}</a>
         <span>({repo.owner})</span>
     </p>
-    <button 
-        class="button"
+    <button
         class:remove-button={repo.onList} 
-        on:click={() => dispatch('Click', repo)}>
+        on:click={() => dispatch('buttonClick', repo)}>
         +
     </button>
 </div>

@@ -1,7 +1,10 @@
-body {
-	font-family: "Segoe UI";
-	padding: 30px;
+*{
+	font-family: Consolas, "courier new";
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
 }
-code {
-	font-size: 15px;
+body {
+	border: 1px solid red;
+	padding: 40px;
 }

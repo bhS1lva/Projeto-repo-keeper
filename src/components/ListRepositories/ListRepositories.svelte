@@ -1,20 +1,21 @@
 <script lang="ts">
     import type IRepository from "../../interfaces/IRepository";
+    
     import Repository from "../Repository/Repository.svelte";
 
-    export let lista: IRepository[];
+    export let list: IRepository[];
     export let title: string;
 
 </script>
 
-<div class="box">
+<div>
 
     <h2>{title}</h2>
    
-    {#each lista as item}
+    {#each list as item}
         <Repository
             repo={item}
-            on:Click
+            on:buttonClick
             />
     {/each}
 

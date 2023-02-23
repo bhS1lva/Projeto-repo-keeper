@@ -3,33 +3,39 @@
     import type IRepository from "../../interfaces/IRepository";
 
     let username: string = "";
-    let status: number | null = null 
+    let status: number; 
 
     const dispatch = createEventDispatcher<{
 		Response: IRepository[] | null;
 	}>();
 
+    function noRepoFound(errorCode: number){
+        status = errorCode;
+        return dispatch('Response', null);
+    }
+
     async function onSubmit() {
         const searchRepo = await fetch(`https://api.github.com/users/${username.trim()}/repos`);
-        
         if(searchRepo.ok) {
-            status = searchRepo.status;
             let repos = await searchRepo.json();
+            status = searchRepo.status
 
-            repos = repos.map((data) => {
-                return {
-                    name: data.name,
-                    url: data.html_url,
-                    owner: data.owner.login,
-                    id: data.id,
-                    onList: false
-                } as IRepository
-            });
-
-            dispatch('Response', repos);
+            if(repos.length){
+                repos = repos.map((data) => {
+                    return {
+                        name: data.name,
+                        url: data.html_url,
+                        owner: data.owner.login,
+                        id: data.id,
+                        onList: false
+                    } as IRepository
+                });
+                dispatch('Response', repos);
+            } else {
+                noRepoFound(3)
+            }            
         } else {
-            status = searchRepo.status;
-            dispatch('Response', null);
+            noRepoFound(searchRepo.status)
         }
     }
 
@@ -46,9 +52,16 @@
 </form>
 
 {#if status === 404}
-    <code>Usuário não encontrado!</code>
+    <p>User not found!</p>
+{:else if status === 3}
+    <p>this user has no repositories</p>
 {/if}
+
 <style>
+    form{
+        border: 1px solid red;
+
+    }
     input, button {
         font-family: inherit;
         font-size: inherit;

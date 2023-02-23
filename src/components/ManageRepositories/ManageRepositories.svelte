@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { check_outros } from "svelte/internal";
-    import { slide } from "svelte/types/runtime/transition";
-    import type IRepository from "../../interfaces/IRepository";
     import ListRepositories from "../ListRepositories/ListRepositories.svelte";
 
-    export let allRepositories: IRepository[] | null = null;
+    import type IRepository from "../../interfaces/IRepository";
+
+    export let allRepositories: IRepository[] = [];
 
     allRepositories = [
         {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: false},
@@ -37,44 +36,27 @@
 
 </script>
 
-<div class="component-content">
+<div>
     {#if allRepositories}
         <ListRepositories
             title="{allRepositories[0].owner} repositories"
-            lista={allRepositories}
-            on:Click={(event) => {manageList(event.detail)}}
+            list={allRepositories}
+            on:buttonClick={(event) => {manageList(event.detail)}}
         />
     {/if}
     
     {#if selectedRepos.length}
         <ListRepositories
             title="Saved repositories"
-            lista={selectedRepos}
-            on:Click={(event) => {manageList(event.detail)}}
+            list={selectedRepos}
+            on:buttonClick={(event) => {manageList(event.detail)}}
         />
     {/if}
 </div>
 
 <style>
-    *{
-        font-family: Consolas, "courier new";
-    }
-    .listed-repository{
-        display: flex;
-        align-items: center;
-        padding-left: 30px;
-        font-size: 20px;
-    }
     .component-content{
         display: inline-flex;
         gap: 50px;
-    }
-    .title-box{
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .title-box button {
-        padding: 3px;
     }
 </style>
