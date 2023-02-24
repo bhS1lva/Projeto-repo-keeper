@@ -1,3 +1,6 @@
+:root{
+	--gray: #DEDDDD;
+}
 *{
 	font-family: Consolas, "courier new";
 	padding: 0;
@@ -5,6 +8,23 @@
 	box-sizing: border-box;
 }
 body {
-	border: 1px solid red;
 	padding: 40px;
+}
+.button {
+	cursor: pointer;
+	border: none;
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	padding: 5px;
+}
+.function-button{
+	transition: 0.3s;
+	width: 25px;
+	height: 25px;	
+}
+.remove-button{
+	border-radius: 20px;
+	background-color: pink;
+	transform: rotate(0.13turn);
 }

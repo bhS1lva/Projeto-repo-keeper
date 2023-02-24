@@ -36,27 +36,31 @@
 
 </script>
 
-<div>
+<div class="list-box">
     {#if allRepositories}
         <ListRepositories
             title="{allRepositories[0].owner} repositories"
             list={allRepositories}
-            on:buttonClick={(event) => {manageList(event.detail)}}
+            on:HandleList={(event) => {manageList(event.detail)}}
         />
     {/if}
+
     
     {#if selectedRepos.length}
         <ListRepositories
             title="Saved repositories"
             list={selectedRepos}
-            on:buttonClick={(event) => {manageList(event.detail)}}
+            on:HandleList={(event) => {manageList(event.detail)}}
         />
     {/if}
 </div>
 
 <style>
-    .component-content{
-        display: inline-flex;
-        gap: 50px;
+    .list-box{
+        border: 1px solid red;
+        display: flex;
+        gap: 70px;
+        justify-content: space-evenly;
+        flex-flow: row wrap;
     }
 </style>

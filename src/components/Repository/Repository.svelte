@@ -6,27 +6,36 @@
     export let repo: IRepository;
 
     const dispatch = createEventDispatcher<{
-		buttonClick: IRepository
+		HandleList: IRepository
 	}>();
 
 </script>
 
-<div>
-    <p>
+<div class="repository">
+    <div class="info">
         <a href={repo.url} target="_blank" rel="noreferrer">{repo.name}</a>
-        <span>({repo.owner})</span>
-    </p>
+        <p>({repo.owner})</p>
+    </div>
     <button
+        class="button function-button"
         class:remove-button={repo.onList} 
-        on:click={() => dispatch('buttonClick', repo)}>
-        +
+        on:click={() => dispatch('HandleList', repo)}>
+        <img src="/assets/plus.svg" alt="plus icon rotate like a x" width="15">
     </button>
 </div>
 
+
 <style>
-    .box{
+    .repository{
         display: inline-flex;
+        flex-flow: row nowrap;
         align-items: center;
+        gap: 10px;
+        margin: 13px 0px 5px 0px;
+    }
+    .info{
+        display: inline-flex;
+        gap: 5px;
     }
     a {
         color: rgb(0,100,200);
@@ -34,17 +43,5 @@
     }
     a:hover {
         text-decoration: underline;
-    }
-    .button{
-        padding: 4px 8px;
-        border-radius: 20px;
-        margin-left: 5px;
-        border: 1px solid #ccc;
-        transition: 0.3s;
-        cursor: pointer;
-    }
-    .remove-button{
-        background-color: pink;
-        transform: rotate(0.13turn);
     }
 </style>
