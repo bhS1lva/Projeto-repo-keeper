@@ -3,7 +3,7 @@
 
     import type IRepository from "../../interfaces/IRepository";
 
-    export let allRepositories: IRepository[] = [];
+    export let allRepositories: IRepository[] = [{name: '', url: '', owner: '', id: 0, onList: false}];
 
     allRepositories = [
         {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: false},
@@ -13,24 +13,29 @@
 
     let selectedRepos: IRepository[] = [];
     
-    function addOrRemoveFromList(repo: IRepository, mode: boolean) {
+    function addOnList(repo: IRepository) {
         allRepositories.map((item, index) => {
             if(item.id === repo.id){
-                allRepositories[index] = {...repo, onList: mode}
-                if(mode){
-                    selectedRepos = [...selectedRepos, {...repo, onList: true}]
-                } else {
-                    selectedRepos = selectedRepos.filter(item => item.id !== repo.id)
-                }
+                allRepositories[index] = {...repo, onList: true}
+                selectedRepos = [...selectedRepos, {...repo, onList: true}]
+            }
+        })
+    }
+
+    function removeFromList(repo: IRepository) {
+        allRepositories.map((item, index) => {
+            if(item.id === repo.id){
+                allRepositories[index] = {...repo, onList: false}
+                selectedRepos = selectedRepos.filter(item => item.id !== repo.id)
             }
         })
     }
 
     function manageList(repo: IRepository){
         if(repo.onList){
-            addOrRemoveFromList(repo, false)//false to remove item from the list
+            removeFromList(repo)
         } else {
-            addOrRemoveFromList(repo, true)//true to add item on the list
+            addOnList(repo)
         }
     }
 
@@ -50,7 +55,7 @@
         <ListRepositories
             title="Saved repositories"
             list={selectedRepos}
-            on:HandleList={(event) => {manageList(event.detail)}}
+            on:HandleList={(event) => {removeFromList(event.detail)}}
         />
     {/if}
 </div>
