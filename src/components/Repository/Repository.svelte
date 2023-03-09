@@ -17,13 +17,13 @@
         <p>({repo.owner})</p>
     </div>
     <button
-        class="button function-button"
-        class:remove-button={repo.onList} 
+        class="function-button add-button"
+        class:remove-button={repo.onList}
         on:click={() => dispatch('HandleList', repo)}>
-        <img src="/assets/plus.svg" alt="plus icon rotate like a x" width="15">
+        
+        <img src="/assets/plus.svg" alt="add item on list icon">
     </button>
 </div>
-
 
 <style>
     .repository{
@@ -36,12 +36,34 @@
     .info{
         display: inline-flex;
         gap: 5px;
+        font-size: 18px;
     }
-    a {
+    a{
         color: rgb(0,100,200);
         text-decoration: none;
     }
     a:hover {
         text-decoration: underline;
+    }
+    .function-button{
+        width: 25px;
+        height: 25px;	
+        cursor: pointer;
+        border: none;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        padding: 5px;
+        border-radius: 20px;
+    }
+    .function-button img{
+        width: 15px;
+    }
+    .add-button{
+        background-color: var(--gray);
+    }
+    .remove-button{
+	    background-color: pink;
+        transform: rotate(0.13turn);
     }
 </style>

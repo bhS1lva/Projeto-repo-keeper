@@ -3,15 +3,20 @@
 
     import type IRepository from "../../interfaces/IRepository";
 
-    export let allRepositories: IRepository[] = [{name: '', url: '', owner: '', id: 0, onList: false}];
+    export let allRepositories: IRepository[] = [];
 
-    allRepositories = [
-        {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: false},
-        {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: false},
-        {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: false}
-    ]
+    let mappedLists = {}
+
+    // allRepositories = [
+    //     {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: false},
+    //     {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: false},
+    //     {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: false}
+    // ]
+
+    mappedLists['allRepositories'] = allRepositories
 
     let selectedRepos: IRepository[] = [];
+    mappedLists['selectedRepos'] = selectedRepos
     
     function addOnList(repo: IRepository) {
         allRepositories.map((item, index) => {
@@ -39,25 +44,44 @@
         }
     }
 
+    function clearList(list: IRepository[]) {
+        list.map(repo => (
+            removeFromList(repo)
+        ))
+    }
+
+    function deleteList(list: string) {
+        delete mappedLists[list]
+        mappedLists = mappedLists //this reassingment was made to trigger the reactivity of svelte
+    }
+    
 </script>
 
 <div class="list-box">
-    {#if allRepositories}
+    {#if allRepositories?.length}
         <ListRepositories
-            title="{allRepositories[0].owner} repositories"
-            list={allRepositories}
-            on:HandleList={(event) => {manageList(event.detail)}}
+            info={{
+                title:`${allRepositories[0].owner} repositories`,
+                list:allRepositories,
+                actions: false
+            }}
+            on:HandleList={(event) => manageList(event.detail)}
         />
     {/if}
 
-    
-    {#if selectedRepos.length}
-        <ListRepositories
-            title="Saved repositories"
-            list={selectedRepos}
-            on:HandleList={(event) => {removeFromList(event.detail)}}
-        />
+    {#if Object.keys(mappedLists).includes('selectedRepos')}
+    <ListRepositories
+        info={{
+            title:'All saved repositories',
+            list:selectedRepos,
+            actions: true
+        }}
+        on:HandleList={(event) => removeFromList(event.detail)}
+        on:ClearList={(event) => clearList(event.detail)}
+        on:DeleteList={() => deleteList('selectedRepos')}
+    />
     {/if}
+
 </div>
 
 <style>

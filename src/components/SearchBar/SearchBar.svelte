@@ -3,7 +3,8 @@
 
     import { createEventDispatcher } from "svelte";
 
-    let username = "";
+    let username: string;
+    let usernameError: string;
     let userInput: HTMLInputElement;
     let status: number; 
 
@@ -11,9 +12,10 @@
 		Response: IRepository[] | null;
 	}>();
 
-    function notFound(errorCode: number){
+    function notFound(errorCode: number, user: string){
         status = errorCode;
-        return dispatch('Response', null);
+        dispatch('Response', null)
+        return usernameError = user;
     }
 
     async function onSubmit() {
@@ -37,10 +39,10 @@
                 });
                 dispatch('Response', repos);
             } else {
-                notFound(3)
+                notFound(3, username)
             }            
         } else {
-            notFound(searchRepo.status)
+            notFound(searchRepo.status, username)
         }
     }
 
@@ -55,16 +57,16 @@
         bind:this={userInput}
         class:input-error={status === 404 || status === 3}
     >
-    <button class="button submit-button">
-        <img src="/assets/search.svg" width="23" alt="search icon">
+    <button class="submit-button">
+        <img src="/assets/search.svg" alt="search icon">
         Search
     </button>
 </form>
 <div class="alert-box">
     {#if status === 404}
-        <p>User not found!</p>
+        <p>User {usernameError} not found!</p>
     {:else if status === 3}
-        <p>This user has no repositories!</p>
+        <p>{usernameError} has no repositories!</p>
     {/if}
 </div>
 
@@ -85,6 +87,7 @@
         border: 2px solid var(--gray);
 		border-radius: 10px;
         outline: 0;
+        transition: 0.5s;
     }
     .input-error{
         border: 1px solid red;
@@ -99,5 +102,13 @@
         font-size: 22px;
         gap: 8px;
         border-radius: 25px;
+        cursor: pointer;
+        border: none;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+    }
+    .submit-button img{
+        width: 23px;
     }
 </style>

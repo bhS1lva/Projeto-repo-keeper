@@ -1,5 +1,7 @@
 :root{
 	--gray: #DEDDDD;
+	--yellow: #FFF6A7;
+	--green: #C6F5BA;
 }
 *{
 	font-family: Consolas, "courier new";
@@ -7,24 +9,6 @@
 	margin: 0;
 	box-sizing: border-box;
 }
-body {
+body{
 	padding: 40px;
-}
-.button {
-	cursor: pointer;
-	border: none;
-	display: flex;
-	align-items: center;
-	font-weight: bold;
-	padding: 5px;
-}
-.function-button{
-	transition: 0.3s;
-	width: 25px;
-	height: 25px;	
-}
-.remove-button{
-	border-radius: 20px;
-	background-color: pink;
-	transform: rotate(0.13turn);
 }
