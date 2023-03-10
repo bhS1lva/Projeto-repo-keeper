@@ -3,6 +3,8 @@
 
     import type IRepository from "../../interfaces/IRepository";
 
+    import Modal from "./Modal.svelte";
+
     export let repo: IRepository;
 
     const dispatch = createEventDispatcher<{
@@ -16,17 +18,36 @@
         <a href={repo.url} target="_blank" rel="noreferrer">{repo.name}</a>
         <p>({repo.owner})</p>
     </div>
-    <button
-        class="function-button add-button"
-        class:remove-button={repo.onList}
-        on:click={() => dispatch('HandleList', repo)}>
-        
-        <img src="/assets/plus.svg" alt="add item on list icon">
-    </button>
+    <div class="side-box">
+        <button
+            class="function-button add-button"
+            class:remove-button={repo.onList}
+            on:click={() => dispatch('HandleList', repo)}>
+            
+            <img src="/assets/plus.svg" alt="add item on list icon">
+        </button>
+        {#if repo.onList}
+        <div class="modal">
+            <Modal lists={{in:['c','b'], notIn:['aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','d']}}/>
+        </div>
+        {/if}
+    </div>
 </div>
 
+
 <style>
+    .modal{
+        position: absolute;
+        left: 33px;
+        z-index: 1;
+    }
+    .side-box{
+        position: relative;
+        align-items: center;
+        display: flex;
+    }
     .repository{
+        border: 1px solid red;
         display: inline-flex;
         flex-flow: row nowrap;
         align-items: center;

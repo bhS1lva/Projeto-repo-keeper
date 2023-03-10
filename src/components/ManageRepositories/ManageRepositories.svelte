@@ -7,11 +7,11 @@
 
     let mappedLists = {}
 
-    // allRepositories = [
-    //     {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: false},
-    //     {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: false},
-    //     {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: false}
-    // ]
+    allRepositories = [
+        {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: false},
+        {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: false},
+        {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: false}
+    ]
 
     mappedLists['allRepositories'] = allRepositories
 
@@ -70,16 +70,16 @@
     {/if}
 
     {#if Object.keys(mappedLists).includes('selectedRepos')}
-    <ListRepositories
-        info={{
-            title:'All saved repositories',
-            list:selectedRepos,
-            actions: true
-        }}
-        on:HandleList={(event) => removeFromList(event.detail)}
-        on:ClearList={(event) => clearList(event.detail)}
-        on:DeleteList={() => deleteList('selectedRepos')}
-    />
+        <ListRepositories
+            info={{
+                title:'All saved repositories',
+                list:selectedRepos,
+                actions: true
+            }}
+            on:HandleList={(event) => removeFromList(event.detail)}
+            on:ClearList={(event) => clearList(event.detail)}
+            on:DeleteList={() => deleteList('selectedRepos')}
+        />
     {/if}
 
 </div>

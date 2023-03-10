@@ -45,6 +45,7 @@
     .box{
         display: flex;
         flex-direction: column;
+        border: 1px solid red;
     }
     .list-button{
         width: 30px;
