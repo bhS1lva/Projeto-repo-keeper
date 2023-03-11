@@ -3,5 +3,6 @@ export default interface IRepository {
     name: string,
     url: string,
     owner: string,
-    onList: boolean
+    onList: string[],
+    clicked: boolean
 }

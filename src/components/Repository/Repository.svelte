@@ -1,15 +1,10 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
 
     import type IRepository from "../../interfaces/IRepository";
 
     import Modal from "./Modal.svelte";
 
     export let repo: IRepository;
-
-    const dispatch = createEventDispatcher<{
-		HandleList: IRepository
-	}>();
 
 </script>
 
@@ -21,14 +16,16 @@
     <div class="side-box">
         <button
             class="function-button add-button"
-            class:remove-button={repo.onList}
-            on:click={() => dispatch('HandleList', repo)}>
+            class:remove-button={repo.clicked}
+            on:click={() => repo.clicked = !repo.clicked}>
             
             <img src="/assets/plus.svg" alt="add item on list icon">
         </button>
-        {#if repo.onList}
+        {#if repo.clicked}
         <div class="modal">
-            <Modal lists={{in:['c','b'], notIn:['aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','d']}}/>
+            <Modal 
+                lists={{in:['c','b'], notIn:['aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','d']}}
+                />
         </div>
         {/if}
     </div>
@@ -43,11 +40,10 @@
     }
     .side-box{
         position: relative;
-        align-items: center;
+        align-items: baseline;
         display: flex;
     }
     .repository{
-        border: 1px solid red;
         display: inline-flex;
         flex-flow: row nowrap;
         align-items: center;

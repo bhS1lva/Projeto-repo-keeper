@@ -34,7 +34,8 @@
                         url: data.html_url,
                         owner: data.owner.login,
                         id: data.id,
-                        onList: false
+                        onList: [],
+                        clicked: false
                     } as IRepository
                 });
                 dispatch('Response', repos);

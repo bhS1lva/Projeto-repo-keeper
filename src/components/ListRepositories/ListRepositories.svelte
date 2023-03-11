@@ -1,38 +1,50 @@
-<script lang="ts">
-    import type IRepository from "../../interfaces/IRepository";
-    
-    import Repository from "../Repository/Repository.svelte";
-
+<script lang="ts">    
     import { createEventDispatcher } from "svelte";
 
-    export let info: {title: string, list: IRepository[], actions: boolean};
+    import Repository from "../Repository/Repository.svelte";
+    import type IRepository from "../../interfaces/IRepository";
+
+    export let title: string = '';
+    export let content: IRepository[] = [];
+
+    let listName = '';
 
     const dispatch = createEventDispatcher<{
-        ClearList: IRepository[],
-        DeleteList: IRepository[]
-    }>();
+		CreateList: string
+	}>();
+
 </script>
 
 <div class="box">
 
     <div class="title-box">
-        <h2>{info.title}</h2>
-        {#if info.actions}
-            <button class="list-button remove-button" on:click={() => dispatch('DeleteList', info.list)}>
+        
+        <div class="title"><h2>{title}</h2></div>
+        {#if title === ''}
+            <div class="listName-form-box">
+                <img src="/assets/trash.svg" alt="delete list icon">
+                <form on:submit|preventDefault={() => dispatch('CreateList', listName)}>
+                    <!-- svelte-ignore a11y-autofocus -->
+                    <input autofocus={true} bind:value={listName}>
+                </form>
+            </div>
+        {/if}
+        <!-- {#if info.actions} -->
+            <button class="list-button remove-button" on:click={() => console.log(content)}>
                 <img src="/assets/trash.svg" alt="delete list icon">
             </button>
-            <button class="list-button clear-button" on:click={() => dispatch('ClearList', info.list)}>
+            <button class="list-button clear-button" on:click={() => console.log(content)}> 
                 <img src="/assets/clear.svg" alt="clear list icon"/>
             </button>
-        {/if}
+        <!-- {/if} -->
     </div>
 
-    {#each info.list as item (item)}
+    {#each content as item (item)}
         <Repository
             repo={item}
-            on:HandleList
-            />
+        />
     {/each}
+    
 
 </div>
 
@@ -40,12 +52,30 @@
     .title-box{
         display: inline-flex;
         align-items: center;
+        justify-content: space-between;
         gap: 10px;
+    }
+    .title{
+        overflow: hidden;
     }
     .box{
         display: flex;
         flex-direction: column;
-        border: 1px solid red;
+        border: 1px solid black;
+        padding: 10px;
+        width: 400px;
+    }
+    .listName-form-box{
+        display: flex;
+        align-items: center;
+        gap: 20px;  
+    }
+    .listName-form-box input{
+        height: 30px;
+        width: 230px;
+    }
+    .listName-form-box img{
+        width: 30px;
     }
     .list-button{
         width: 30px;
