@@ -2,11 +2,16 @@
     import ListRepositories from "../ListRepositories/ListRepositories.svelte";
 
     import type IRepository from "../../interfaces/IRepository";
-    import { listController } from "../../controllers/listController";
+    // import { listController } from "../../controllers/listController";
+    import { ListController } from "../../controllers/listController";
+    import { compute_rest_props } from "svelte/internal";
+
 
     export let allRepositories: IRepository[] = [];
 
-    let mappedLists = listController.container;
+    let mappedLists = {}
+
+    const listController = new ListController(mappedLists);
 
     allRepositories = [
         {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: [], clicked: false},
@@ -49,12 +54,13 @@
         ))
     }
 
-    function deleteList(list: string) {
-        delete mappedLists[list]
-        mappedLists = mappedLists //this reassingment was made to trigger the reactivity of svelte
+    function deleteList(listName:string) {
+        listController.deleteList(listName);
+        mappedLists = mappedLists;
     }
 
-    function createNewList(listName){  
+    let showListScope = false;
+    function createNewList(listName:string){  
         if(listName === ''){
             listName = 'new-list';
         }
@@ -64,11 +70,9 @@
             listName += fakelist.length;
         }
         showListScope = false;
-        listController.createList(listName);  
+        listController.createList(listName);
         mappedLists = mappedLists;
     }
-
-    let showListScope = false;
 
 </script>
 
@@ -86,7 +90,7 @@
             <ListRepositories
                 title={list}
                 content={mappedLists[list]}
-                
+                on:DeleteList={(event) => deleteList(event.detail)}
             /> 
         {/each}
         {#if showListScope}
@@ -97,7 +101,7 @@
     </div>
 
     <div class="form-box">
-        <button class="new-list" on:click={() => showListScope = !showListScope}>
+        <button class="new-list" on:click={() => showListScope = true}>
             <h2>+create a new list</h2>
         </button>
     </div>

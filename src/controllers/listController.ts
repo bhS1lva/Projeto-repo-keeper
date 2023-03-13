@@ -1,4 +1,15 @@
-import type IRepository from "../interfaces/IRepository";
+export class ListController{
+    container;
+    createList(name:string){
+        this.container[name] = [];
+    };
+    deleteList(name:string){
+        delete this.container[name];
+    }
+    constructor(container){
+        this.container = container;
+    }
+}
 
 function list(){
     let container = {};
@@ -6,19 +17,9 @@ function list(){
         container,
         createList: function(name:string){
             container[name] = [];
-            return {
-                add: function(repo:IRepository){
-                    container[name] = [{repo}]
-                },
-                remove: function(item){
-
-                },
-                clear: function(item){
-
-                }
-            }
         }
     }
 }
 
-export const listController = list()
+
+// export const listController = list()

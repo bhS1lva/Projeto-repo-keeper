@@ -10,7 +10,8 @@
     let listName = '';
 
     const dispatch = createEventDispatcher<{
-		CreateList: string
+		CreateList: string,
+        DeleteList: string
 	}>();
 
 </script>
@@ -30,7 +31,7 @@
             </div>
         {/if}
         <!-- {#if info.actions} -->
-            <button class="list-button remove-button" on:click={() => console.log(content)}>
+            <button class="list-button remove-button" on:click={() => dispatch('DeleteList', title)}>
                 <img src="/assets/trash.svg" alt="delete list icon">
             </button>
             <button class="list-button clear-button" on:click={() => console.log(content)}> 
