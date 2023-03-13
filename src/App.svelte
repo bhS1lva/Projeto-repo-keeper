@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import ManageRepositories from "./components/ManageRepositories/ManageRepositories.svelte";
+    import ManageLists from "./components/ManageLists/ManageLists.svelte";
     import SearchBar from "./components/SearchBar/SearchBar.svelte";
     import type IRepository from "./interfaces/IRepository";
 
@@ -13,7 +13,7 @@
 
 <main>
 	<header><SearchBar on:Response={getEvent}/></header>
-	<div><ManageRepositories allRepositories={repos}/></div>
+	<div><ManageLists allRepositories={repos}/></div>
 </main>
 
 <style>

@@ -1,9 +1,16 @@
 <script lang="ts">
-
     export let lists: {in: string[], notIn: string[]};
+    // export let listName: string;
 
-    // let listName = '';
+    export let repo;
 
+    import { createEventDispatcher } from "svelte";
+
+    import type IRepository from "../../interfaces/IRepository";
+
+    const dispatch = createEventDispatcher<{
+        AddItem: {repo: IRepository, list: string}
+    }>();
 </script>
 
 <div class="box">
@@ -13,10 +20,14 @@
         </button>
     </div> 
     <p>or</p>-->
-    <div>
-        <h4>Add in an existing list:</h4>
+    <div class="lists">
+        {#if lists.notIn.length}
+            <h4>Add in a list:</h4>
+            {:else}
+            <h4>Create a new list to save the repository!</h4>
+        {/if}
         {#each lists.notIn as list}
-            <button class="clickable">
+            <button class="clickable" on:click={() => dispatch('AddItem', {repo, list})}>
                 <p>+{list}</p>
             </button>
         {/each }
@@ -25,7 +36,7 @@
 
 <style>
     .box{
-        width: 300px;
+        width: 250px;
         background-color: white;
         border: 2px solid var(--gray);
         text-align: center;
@@ -47,5 +58,9 @@
     }
     .clickable:hover{
         text-decoration: underline;
+    }
+    .lists{
+        display: flex;
+        flex-flow: column nowrap;
     }
 </style>

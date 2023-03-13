@@ -1,17 +1,11 @@
 <script lang="ts">
     import ListRepositories from "../ListRepositories/ListRepositories.svelte";
-
     import type IRepository from "../../interfaces/IRepository";
-    // import { listController } from "../../controllers/listController";
-    import { ListController } from "../../controllers/listController";
-    import { compute_rest_props } from "svelte/internal";
-
+    import { listController } from "../../controllers/listController";
 
     export let allRepositories: IRepository[] = [];
 
-    let mappedLists = {}
-
-    const listController = new ListController(mappedLists);
+    let mappedLists = listController.container
 
     allRepositories = [
         {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: [], clicked: false},
@@ -40,14 +34,6 @@
         })
     }
 
-    function manageList(repo: IRepository){
-        if(repo.clicked){
-            removeFromList(repo)
-        } else {
-            addOnList(repo)
-        }
-    }
-
     function clearList(list: IRepository[]) {
         list.map(repo => (
             removeFromList(repo)
@@ -74,16 +60,24 @@
         mappedLists = mappedLists;
     }
 
+    function addItem(repo:IRepository, listName:string){
+        repo = {...repo, onList:[listName], clicked:'blocked'};
+        mappedLists[listName] = [...mappedLists[listName], repo];
+        console.log(repo);
+        mappedLists = mappedLists;
+    }
+
 </script>
 
 
 <div>
-    
     <div class="list-box">
         {#if allRepositories?.length}
             <ListRepositories
                 title={`${allRepositories[0].owner} repositories`}
                 content={allRepositories}
+                on:AddItem={(e) => addItem(e.detail.repo, e.detail.list)}
+
             />
         {/if}
         {#each Object.keys(mappedLists) as list}
@@ -110,7 +104,6 @@
 
 <style>
     .list-box{
-        border: 1px solid red;
         display: flex;
         gap: 70px;
         justify-content: space-evenly;

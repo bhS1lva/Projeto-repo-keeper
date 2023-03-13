@@ -1,7 +1,7 @@
-export class ListController{
+class ListController{
     container;
     createList(name:string){
-        this.container[name] = [];
+        this.container[name] = [];    
     };
     deleteList(name:string){
         delete this.container[name];
@@ -11,15 +11,4 @@ export class ListController{
     }
 }
 
-function list(){
-    let container = {};
-    return {
-        container,
-        createList: function(name:string){
-            container[name] = [];
-        }
-    }
-}
-
-
-// export const listController = list()
+export const listController = new ListController({});

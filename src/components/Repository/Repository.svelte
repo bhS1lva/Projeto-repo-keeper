@@ -1,11 +1,12 @@
 <script lang="ts">
-
     import type IRepository from "../../interfaces/IRepository";
+    import { listController } from "../../controllers/listController";
 
     import Modal from "./Modal.svelte";
 
     export let repo: IRepository;
 
+    let isRepoBlocked = typeof(repo.clicked) === 'boolean';
 </script>
 
 <div class="repository">
@@ -14,19 +15,28 @@
         <p>({repo.owner})</p>
     </div>
     <div class="side-box">
-        <button
-            class="function-button add-button"
-            class:remove-button={repo.clicked}
-            on:click={() => repo.clicked = !repo.clicked}>
-            
-            <img src="/assets/plus.svg" alt="add item on list icon">
-        </button>
-        {#if repo.clicked}
-        <div class="modal">
-            <Modal 
-                lists={{in:['c','b'], notIn:['aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','d']}}
-                />
-        </div>
+        {#if isRepoBlocked}
+            <button
+                class="function-button add-button"
+                class:remove-button={repo.clicked}
+                on:click={() => repo.clicked = !repo.clicked}
+                on:blur={() => /*repo.clicked = false*/ console.log('blur')}
+                >
+                <img src="/assets/plus.svg" alt="add item on list icon">
+            </button>
+            {:else}
+                <button class="function-button remove-button">
+                    <img src="/assets/plus.svg" alt="remove item from list icon">
+                </button>
+        {/if}
+        {#if repo.clicked && isRepoBlocked}
+            <div class="modal">
+                <Modal 
+                    lists={{in:repo.onList, notIn:Object.keys(listController.container)}}
+                    {repo}
+                    on:AddItem
+                    />
+            </div>
         {/if}
     </div>
 </div>

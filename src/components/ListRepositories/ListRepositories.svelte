@@ -43,6 +43,7 @@
     {#each content as item (item)}
         <Repository
             repo={item}
+            on:AddItem
         />
     {/each}
     

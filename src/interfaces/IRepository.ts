@@ -4,5 +4,5 @@ export default interface IRepository {
     url: string,
     owner: string,
     onList: string[],
-    clicked: boolean
+    clicked: boolean | 'blocked'
 }
