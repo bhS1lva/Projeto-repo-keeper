@@ -44,6 +44,7 @@
         <Repository
             repo={item}
             on:AddItem
+            on:RemoveItem
         />
     {/each}
     

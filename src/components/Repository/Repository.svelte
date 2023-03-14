@@ -3,10 +3,15 @@
     import { listController } from "../../controllers/listController";
 
     import Modal from "./Modal.svelte";
+    import { createEventDispatcher } from "svelte";
 
     export let repo: IRepository;
 
     let isRepoBlocked = typeof(repo.clicked) === 'boolean';
+
+    const dispatch = createEventDispatcher<{
+        RemoveItem: IRepository
+    }>();
 </script>
 
 <div class="repository">
@@ -25,7 +30,10 @@
                 <img src="/assets/plus.svg" alt="add item on list icon">
             </button>
             {:else}
-                <button class="function-button remove-button">
+                <button 
+                    class="function-button remove-button" 
+                    on:click={() => dispatch('RemoveItem', repo)}
+                >
                     <img src="/assets/plus.svg" alt="remove item from list icon">
                 </button>
         {/if}

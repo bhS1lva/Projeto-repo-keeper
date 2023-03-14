@@ -8,42 +8,10 @@
     let mappedLists = listController.container
 
     allRepositories = [
-        {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: [], clicked: false},
-        {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: [], clicked: false},
-        {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: [], clicked:false}
+        {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: '', clicked: false},
+        {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: '', clicked: false},
+        {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: '', clicked:false}
     ]
-
-    let selectedRepos: IRepository[] = [];
-
-    function addOnList(repo: IRepository) {
-        allRepositories.map((item, index) => {
-            if(item.id === repo.id){
-                allRepositories[index] = {...repo, clicked: true}
-                selectedRepos = [...selectedRepos, {...repo, clicked: true}]
-            }
-        })
-
-    }
-
-    function removeFromList(repo: IRepository) {
-        allRepositories.map((item, index) => {
-            if(item.id === repo.id){
-                allRepositories[index] = {...repo, clicked: false}
-                selectedRepos = selectedRepos.filter(item => item.id !== repo.id)
-            }
-        })
-    }
-
-    function clearList(list: IRepository[]) {
-        list.map(repo => (
-            removeFromList(repo)
-        ))
-    }
-
-    function deleteList(listName:string) {
-        listController.deleteList(listName);
-        mappedLists = mappedLists;
-    }
 
     let showListScope = false;
     function createNewList(listName:string){  
@@ -60,12 +28,21 @@
         mappedLists = mappedLists;
     }
 
-    function addItem(repo:IRepository, listName:string){
-        repo = {...repo, onList:[listName], clicked:'blocked'};
-        mappedLists[listName] = [...mappedLists[listName], repo];
-        console.log(repo);
+    function deleteList(listName:string) {
+        listController.deleteList(listName);
         mappedLists = mappedLists;
     }
+
+    function addItem(repo:IRepository, listName:string){
+        repo = {...repo, onList:listName, clicked:'blocked'};
+        mappedLists[listName] = [...mappedLists[listName], repo];
+        mappedLists = mappedLists;
+    }
+
+    function removeItem(repo:IRepository){
+        mappedLists[repo.onList] = mappedLists[repo.onList].filter(item => item.id !== repo.id)
+    }
+
 
 </script>
 
@@ -85,6 +62,7 @@
                 title={list}
                 content={mappedLists[list]}
                 on:DeleteList={(event) => deleteList(event.detail)}
+                on:RemoveItem={(event) => removeItem(event.detail)}
             /> 
         {/each}
         {#if showListScope}

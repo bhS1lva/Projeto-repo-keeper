@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let lists: {in: string[], notIn: string[]};
+    export let lists: {in: string, notIn: string[]};
     // export let listName: string;
 
     export let repo;
