@@ -1,16 +1,16 @@
 <script lang="ts">
     import type IRepository from "../../interfaces/IRepository";
-    import { listController } from "../../controllers/listController";
 
     import Modal from "./Modal.svelte";
     import { createEventDispatcher } from "svelte";
 
     export let repo: IRepository;
+    export let list: string;
 
-    let isRepoBlocked = typeof(repo.clicked) === 'boolean';
+    const isRepoBlocked = typeof(repo.clicked) === 'boolean';
 
     const dispatch = createEventDispatcher<{
-        RemoveItem: IRepository
+        RemoveItem: {repo:IRepository, list:string}
     }>();
 </script>
 
@@ -25,14 +25,13 @@
                 class="function-button add-button"
                 class:remove-button={repo.clicked}
                 on:click={() => repo.clicked = !repo.clicked}
-                on:blur={() => /*repo.clicked = false*/ console.log('blur')}
                 >
                 <img src="/assets/plus.svg" alt="add item on list icon">
             </button>
             {:else}
                 <button 
                     class="function-button remove-button" 
-                    on:click={() => dispatch('RemoveItem', repo)}
+                    on:click={() => dispatch('RemoveItem', {repo, list})}
                 >
                     <img src="/assets/plus.svg" alt="remove item from list icon">
                 </button>
@@ -40,10 +39,10 @@
         {#if repo.clicked && isRepoBlocked}
             <div class="modal">
                 <Modal 
-                    lists={{in:repo.onList, notIn:Object.keys(listController.container)}}
                     {repo}
                     on:AddItem
-                    />
+                    on:CreateListModal
+                />
             </div>
         {/if}
     </div>

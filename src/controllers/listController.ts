@@ -1,12 +1,12 @@
 class ListController{
-    container;
+    container:{};
     createList(name:string){
         this.container[name] = [];    
     };
     deleteList(name:string){
         delete this.container[name];
     }
-    constructor(container){
+    constructor(container:{}){
         this.container = container;
     }
 }

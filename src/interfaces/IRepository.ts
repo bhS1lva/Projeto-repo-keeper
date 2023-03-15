@@ -3,6 +3,6 @@ export default interface IRepository {
     name: string,
     url: string,
     owner: string,
-    onList: string,
+    onList: string[],
     clicked: boolean | 'blocked'
 }

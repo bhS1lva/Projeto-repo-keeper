@@ -1,32 +1,38 @@
 <script lang="ts">
-    export let lists: {in: string, notIn: string[]};
-    // export let listName: string;
 
     export let repo;
+
+    import { listController } from "../../controllers/listController";
+
+    let repoNotIn:string[];
+
+    repoNotIn = Object.keys(listController.container).filter(item => !repo.onList.includes(item));
 
     import { createEventDispatcher } from "svelte";
 
     import type IRepository from "../../interfaces/IRepository";
 
     const dispatch = createEventDispatcher<{
-        AddItem: {repo: IRepository, list: string}
+        AddItem: {repo: IRepository, list: string},
+        CreateListModal: string,
     }>();
 </script>
 
 <div class="box">
-    <!-- <div>
-        <button class="clickable" on:click={() => console.log('modal component')}>
-            <p class="new-list">+create a new list</p>
-        </button>
-    </div> 
-    <p>or</p>-->
     <div class="lists">
-        {#if lists.notIn.length}
+        {#if repoNotIn.length}
+            <button class="clickable" on:click={() => dispatch('CreateListModal')}>
+                <p class="new-list">+create a new list</p>
+            </button>
+            <p>or</p>
             <h4>Add in a list:</h4>
             {:else}
-            <h4>Create a new list to save the repository!</h4>
+                <h4>Create a new list to save the repository!</h4>
+                <button class="clickable" on:click={() => dispatch('CreateListModal')}>
+                    <p class="new-list">+create a new list</p>
+                </button>
         {/if}
-        {#each lists.notIn as list}
+        {#each repoNotIn as list}
             <button class="clickable" on:click={() => dispatch('AddItem', {repo, list})}>
                 <p>+{list}</p>
             </button>
@@ -46,12 +52,14 @@
         border-radius: 0px 40px 40px 40px;
         overflow: hidden;
     }
-    /* .new-list{
-        font-size: 23px;
-    } */
+    .new-list{
+        font-weight: bold;
+        color: var(--green);
+    }
     .clickable{
         font-size: 18px;
         background: none;
+        font-weight: bold;
         border: none;
         color: var(--darker-gray);
         cursor: pointer;

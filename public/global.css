@@ -2,13 +2,14 @@
 	--gray: #DEDDDD;
 	--darker-gray: #CAC7C7;
 	--yellow: #FFF6A7;
-	--green: #C6F5BA;
+	--green: #87C987;
 }
 *{
 	font-family: Consolas, "courier new";
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+	user-select: none;
 }
 body{
 	padding: 40px;

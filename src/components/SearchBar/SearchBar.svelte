@@ -34,7 +34,7 @@
                         url: data.html_url,
                         owner: data.owner.login,
                         id: data.id,
-                        onList: '',
+                        onList: [],
                         clicked: false
                     } as IRepository
                 });

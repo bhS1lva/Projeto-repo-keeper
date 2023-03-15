@@ -7,26 +7,23 @@
     export let title: string = '';
     export let content: IRepository[] = [];
 
-    let listName = '';
+    let newListName = '';
 
     const dispatch = createEventDispatcher<{
 		CreateList: string,
         DeleteList: string
 	}>();
-
 </script>
 
 <div class="box">
-
     <div class="title-box">
-        
         <div class="title"><h2>{title}</h2></div>
         {#if title === ''}
             <div class="listName-form-box">
-                <img src="/assets/trash.svg" alt="delete list icon">
-                <form on:submit|preventDefault={() => dispatch('CreateList', listName)}>
+                <img src="/assets/edit.svg" alt="name list icon">
+                <form on:submit|preventDefault={() => dispatch('CreateList', newListName)}>
                     <!-- svelte-ignore a11y-autofocus -->
-                    <input autofocus={true} bind:value={listName}>
+                    <input autofocus={true} bind:value={newListName}>
                 </form>
             </div>
         {/if}
@@ -43,8 +40,10 @@
     {#each content as item (item)}
         <Repository
             repo={item}
+            list={title}
             on:AddItem
             on:RemoveItem
+            on:CreateListModal
         />
     {/each}
     
@@ -64,9 +63,9 @@
     .box{
         display: flex;
         flex-direction: column;
-        border: 1px solid black;
+        border: 2px solid black;
         padding: 10px;
-        width: 400px;
+        border-radius: 10px;
     }
     .listName-form-box{
         display: flex;

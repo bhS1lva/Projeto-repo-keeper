@@ -8,23 +8,24 @@
     let mappedLists = listController.container
 
     allRepositories = [
-        {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: '', clicked: false},
-        {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: '', clicked: false},
-        {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: '', clicked:false}
+        {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, onList: [], clicked: false},
+        {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, onList: [], clicked: false},
+        {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: [], clicked:false}
     ]
 
     let showListScope = false;
-    function createNewList(listName:string){  
-        if(listName === ''){
-            listName = 'new-list';
+    
+    function createNewList(newListName:string){  
+        if(newListName === ''){
+            newListName = 'new-list';
         }
-        if(Object.keys(mappedLists).includes(listName)){
-            var regex = new RegExp(`^${listName}`);
+        if(Object.keys(mappedLists).includes(newListName)){
+            var regex = new RegExp(`^${newListName}`);
             const fakelist = Object.keys(mappedLists).filter(item => regex.test(item));
-            listName += fakelist.length;
+            newListName += fakelist.length;
         }
         showListScope = false;
-        listController.createList(listName);
+        listController.createList(newListName);
         mappedLists = mappedLists;
     }
 
@@ -34,16 +35,28 @@
     }
 
     function addItem(repo:IRepository, listName:string){
-        repo = {...repo, onList:listName, clicked:'blocked'};
+        allRepositories.map((item, index) => {
+            if(item.id === repo.id){
+                
+                repo = {
+                    ...repo,
+                    onList: [...repo.onList, listName],
+                    clicked:false
+                };
+                
+                allRepositories[index] = repo;
+            } 
+        })
+
+        repo = {...repo, clicked:'blocked'};
         mappedLists[listName] = [...mappedLists[listName], repo];
         mappedLists = mappedLists;
     }
 
-    function removeItem(repo:IRepository){
-        mappedLists[repo.onList] = mappedLists[repo.onList].filter(item => item.id !== repo.id)
+    function removeItem(repo:IRepository, list:string){
+        mappedLists[list] = mappedLists[list].filter(item => item.id !== repo.id)
+        
     }
-
-
 </script>
 
 
@@ -54,7 +67,8 @@
                 title={`${allRepositories[0].owner} repositories`}
                 content={allRepositories}
                 on:AddItem={(e) => addItem(e.detail.repo, e.detail.list)}
-
+                on:DeleteList={() => allRepositories = []}
+                on:CreateListModal={() => showListScope = true}
             />
         {/if}
         {#each Object.keys(mappedLists) as list}
@@ -62,7 +76,7 @@
                 title={list}
                 content={mappedLists[list]}
                 on:DeleteList={(event) => deleteList(event.detail)}
-                on:RemoveItem={(event) => removeItem(event.detail)}
+                on:RemoveItem={(event) => removeItem(event.detail.repo, event.detail.list)}
             /> 
         {/each}
         {#if showListScope}
