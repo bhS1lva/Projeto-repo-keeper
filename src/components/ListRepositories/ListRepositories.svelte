@@ -20,8 +20,8 @@
     <div class="title-box">
         <div class="title"><h2>{title}</h2></div>
         {#if title === ''}
-            <button class="list-button close-new-list-box" on:click={() => dispatch('DeleteList')}>
-                <img src="/assets/trash.svg" alt="close new list form">
+            <button class="list-button close-new-list-box" on:click={() => dispatch('DeleteList')} title="Close new list form">
+                <img src="/assets/bold-x.svg" alt="close new list form">
             </button>
             <div class="listName-form-box">
                 <img src="/assets/edit.svg" alt="name list icon">
@@ -33,8 +33,8 @@
                     </button>
                 </form>
             </div>
-            
         {/if}
+        
         {#if title}
             <button class="list-button remove-button" on:click={() => dispatch('DeleteList', title)}>
                 <img src="/assets/trash.svg" alt="delete list icon">
@@ -54,8 +54,6 @@
             on:CreateListModal
         />
     {/each}
-    
-
 </div>
 
 <style>
@@ -119,8 +117,16 @@
     .close-new-list-box{
         border-radius: 20px;
         background-color: var(--gray);
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: absolute;
-        left: -22px;
-        bottom: 22px;
+        left: -21px;
+        bottom: 25px;
+        width: 25px;
+        height: 25px;	
+    }
+    .close-new-list-box img{
+        width: 13px;
     }
 </style>

@@ -18,7 +18,7 @@
         return usernameError = user;
     }
 
-    async function onSubmit() {
+    async function onSubmit() {  
         userInput.focus()
         
         const searchRepo = await fetch(`https://api.github.com/users/${username.trim()}/repos`);
@@ -46,23 +46,34 @@
             notFound(searchRepo.status, username)
         }
     }
-
 </script>
 
-<form on:submit|preventDefault={onSubmit}>
-    <input
-        type="text"
-        placeholder="Find a user"
-        required
-        bind:value={username}
-        bind:this={userInput}
-        class:input-error={status === 404 || status === 3}
-    >
-    <button class="submit-button" title="Search">
-        <img src="/assets/search.svg" alt="search icon">
-        Search
-    </button>
-</form>
+<div class="form-box">
+    <form on:submit|preventDefault={onSubmit}>
+        <input
+            type="text"
+            placeholder="Find a user"
+            required
+            bind:value={username}
+            bind:this={userInput}
+            class:input-error={status === 404 || status === 3}
+        >
+        <button
+            type="reset"
+            class="button clear-button"
+            title="Clear form"
+            class:disappear={!username}
+            on:click={() => userInput.focus()}
+        >
+            <img src="/assets/bold-x.svg" alt="search icon">
+        </button>
+        <button type="submit" class="button submit-button" title="Search">
+            <img src="/assets/search.svg" alt="search icon">
+            Search
+        </button>
+    </form>
+
+</div>
 <div class="alert-box">
     {#if status === 404}
         <p>User {usernameError} not found!</p>
@@ -72,22 +83,29 @@
 </div>
 
 <style>
+    .form-box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: row nowrap;
+        margin-bottom: 10px;
+    }
     form{
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
+        width: 70%;
     }
     input{
         font-family: 'Segoe UI', sans-serif;
         padding: 10px 20px;
-		width: 50%;
 		font-size: 1.3rem;
         font-weight: 100;
-        border: 2px solid var(--gray);
+        border: 3px solid var(--gray);
 		border-radius: 10px;
         outline: 0;
+        width: inherit;
+        min-width: 250px;
         transition: 0.5s;
     }
     .input-error{
@@ -97,19 +115,41 @@
         display: inline-flex;
         font-size: 1.5rem;
         font-style: italic;
-    }    
+    }   
+    .button{
+        cursor: pointer;
+        border: none;        
+    } 
     .submit-button{
         padding: 10px;
         font-size: 22px;
         gap: 8px;
         border-radius: 25px;
-        cursor: pointer;
-        border: none;
         display: flex;
         align-items: center;
         font-weight: bold;
+        position: relative;
+        right: 15px;
     }
     .submit-button img{
         width: 23px;
+    }
+    .clear-button{
+        position: relative;
+        right: 40px;
+        padding: 10px;
+        border-radius: 20px;
+        width: 25px;
+        height: 25px;
+        background-color: var(--gray);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .clear-button img{
+        width: 11px;
+    }
+    .disappear{
+        visibility: hidden;
     }
 </style>

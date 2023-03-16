@@ -13,7 +13,7 @@
         {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: [], clicked:false}
     ]
 
-    let showListScope = true;
+    let showListScope = false;
     
     function createNewList(newListName:string){  
         if(newListName === ''){
@@ -80,7 +80,7 @@
             on:DeleteList={() => showListScope = false}
         />
     {/if}
-    {#if !Object.keys(mappedLists).length && !allRepositories.length && !showListScope}
+    {#if !Object.keys(mappedLists).length && !allRepositories?.length && !showListScope}
         <img class="no-list-image" src="assets/noListsImage.png" alt="you don’t have any list">
     {/if}
 </div>

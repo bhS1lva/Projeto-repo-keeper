@@ -26,7 +26,7 @@
                 class:remove-button={repo.clicked}
                 on:click={() => repo.clicked = !repo.clicked}
                 title="Show repository options"
-                >
+            >
                 <img src="/assets/plus.svg" alt="add item on list icon">
             </button>
             {:else}
