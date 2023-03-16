@@ -13,7 +13,7 @@
         {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, onList: [], clicked:false}
     ]
 
-    let showListScope = false;
+    let showListScope = true;
     
     function createNewList(newListName:string){  
         if(newListName === ''){
@@ -37,17 +37,14 @@
     function addItem(repo:IRepository, listName:string){
         allRepositories.map((item, index) => {
             if(item.id === repo.id){
-                
                 repo = {
                     ...repo,
                     onList: [...repo.onList, listName],
                     clicked:false
-                };
-                
+                };      
                 allRepositories[index] = repo;
             } 
         })
-
         repo = {...repo, clicked:'blocked'};
         mappedLists[listName] = [...mappedLists[listName], repo];
         mappedLists = mappedLists;
@@ -59,39 +56,39 @@
     }
 </script>
 
+<div class="list-box">
+    {#if allRepositories?.length}
+        <ListRepositories
+            title={`${allRepositories[0].owner} repositories`}
+            content={allRepositories}
+            on:AddItem={(e) => addItem(e.detail.repo, e.detail.list)}
+            on:DeleteList={() => allRepositories = []}
+            on:CreateListModal={() => showListScope = true}
+        />
+    {/if}
+    {#each Object.keys(mappedLists) as list}
+        <ListRepositories
+            title={list}
+            content={mappedLists[list]}
+            on:DeleteList={(event) => deleteList(event.detail)}
+            on:RemoveItem={(event) => removeItem(event.detail.repo, event.detail.list)}
+        /> 
+    {/each}
+    {#if showListScope}
+        <ListRepositories
+            on:CreateList={(event) => createNewList(event.detail)}
+            on:DeleteList={() => showListScope = false}
+        />
+    {/if}
+    {#if !Object.keys(mappedLists).length && !allRepositories.length && !showListScope}
+        <img class="no-list-image" src="assets/noListsImage.png" alt="you don’t have any list">
+    {/if}
+</div>
 
-<div>
-    <div class="list-box">
-        {#if allRepositories?.length}
-            <ListRepositories
-                title={`${allRepositories[0].owner} repositories`}
-                content={allRepositories}
-                on:AddItem={(e) => addItem(e.detail.repo, e.detail.list)}
-                on:DeleteList={() => allRepositories = []}
-                on:CreateListModal={() => showListScope = true}
-            />
-        {/if}
-        {#each Object.keys(mappedLists) as list}
-            <ListRepositories
-                title={list}
-                content={mappedLists[list]}
-                on:DeleteList={(event) => deleteList(event.detail)}
-                on:RemoveItem={(event) => removeItem(event.detail.repo, event.detail.list)}
-            /> 
-        {/each}
-        {#if showListScope}
-            <ListRepositories
-                on:CreateList={(event) => createNewList(event.detail)}
-            />
-        {/if}
-    </div>
-
-    <div class="form-box">
-        <button class="new-list" on:click={() => showListScope = true}>
-            <h2>+create a new list</h2>
-        </button>
-    </div>
-
+<div class="new-list-box">
+    <button class="new-list" on:click={() => showListScope = true} title="Create a new list">
+        <h2>+create a new list</h2>
+    </button>
 </div>
 
 <style>
@@ -101,7 +98,7 @@
         justify-content: space-evenly;
         flex-flow: row wrap;
     }
-    .form-box{
+    .new-list-box{
         text-align: center;
         padding: 10px;
     }
@@ -114,5 +111,8 @@
     }
     .new-list:hover{
         text-decoration: underline;
+    }
+    .no-list-image{
+        margin: 10px 20px 40px 20px;
     }
 </style>

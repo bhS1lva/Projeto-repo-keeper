@@ -58,7 +58,7 @@
         bind:this={userInput}
         class:input-error={status === 404 || status === 3}
     >
-    <button class="submit-button">
+    <button class="submit-button" title="Search">
         <img src="/assets/search.svg" alt="search icon">
         Search
     </button>
