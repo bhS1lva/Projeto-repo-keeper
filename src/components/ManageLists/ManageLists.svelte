@@ -56,7 +56,13 @@
     }
 </script>
 
+<div class="new-list-box">
+    <button on:click={() => showListScope = true} title="Create a new list">
+        <h2>+create a new list</h2>
+    </button>
+</div>
 <div class="list-box">
+    
     {#if allRepositories?.length}
         <ListRepositories
             title={`${allRepositories[0].owner} repositories`}
@@ -81,14 +87,8 @@
         />
     {/if}
     {#if !Object.keys(mappedLists).length && !allRepositories?.length && !showListScope}
-        <img class="no-list-image" src="assets/noListsImage.png" alt="you don’t have any list">
+        <img class="no-list-image" src="/assets/noListsImage.png" alt="you don’t have any list">
     {/if}
-</div>
-
-<div class="new-list-box">
-    <button class="new-list" on:click={() => showListScope = true} title="Create a new list">
-        <h2>+create a new list</h2>
-    </button>
 </div>
 
 <style>
@@ -100,16 +100,16 @@
     }
     .new-list-box{
         text-align: center;
-        padding: 10px;
+        padding: 30px;
     }
-    .new-list{
+    .new-list-box button{
         font-size: 18px;
         background: none;
         border: none;
         color: var(--darker-gray);
         cursor: pointer;
     }
-    .new-list:hover{
+    .new-list-box button:hover{
         text-decoration: underline;
     }
     .no-list-image{

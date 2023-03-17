@@ -121,8 +121,8 @@
         justify-content: center;
         align-items: center;
         position: absolute;
-        left: -21px;
-        bottom: 25px;
+        left: -20px;
+        bottom: 24px;
         width: 25px;
         height: 25px;	
     }

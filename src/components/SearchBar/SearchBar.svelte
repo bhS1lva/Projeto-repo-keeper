@@ -20,7 +20,7 @@
 
     async function onSubmit() {  
         userInput.focus()
-        
+
         const searchRepo = await fetch(`https://api.github.com/users/${username.trim()}/repos`);
 
         if(searchRepo.ok) {
@@ -48,53 +48,70 @@
     }
 </script>
 
-<div class="form-box">
+<div class="header">
+    <img src="/assets/logo.svg" alt="logo">
     <form on:submit|preventDefault={onSubmit}>
-        <input
-            type="text"
-            placeholder="Find a user"
-            required
-            bind:value={username}
-            bind:this={userInput}
-            class:input-error={status === 404 || status === 3}
-        >
-        <button
-            type="reset"
-            class="button clear-button"
-            title="Clear form"
-            class:disappear={!username}
-            on:click={() => userInput.focus()}
-        >
-            <img src="/assets/bold-x.svg" alt="search icon">
-        </button>
+        <div class="input-box">
+            <input
+                type="text"
+                placeholder="Find a user"
+                required
+                bind:value={username}
+                bind:this={userInput}
+                class:input-error={status === 404 || status === 3}
+            >
+            <!-- {#if username} -->
+            <button
+                type="reset"
+                class="button clear-button"
+                title="Clear form"
+                on:click={() => userInput.focus()}
+            >
+                <img src="/assets/bold-x.svg" alt="search icon">
+            </button>
+        </div>
+        <!-- {/if} -->
         <button type="submit" class="button submit-button" title="Search">
             <img src="/assets/search.svg" alt="search icon">
             Search
         </button>
     </form>
+</div>
 
-</div>
-<div class="alert-box">
-    {#if status === 404}
-        <p>User {usernameError} not found!</p>
-    {:else if status === 3}
-        <p>{usernameError} has no repositories!</p>
-    {/if}
-</div>
+{#if status === 404 || status === 3}
+    <div class="alert-box">
+        {#if status === 404}
+            <p>User {usernameError} not found!</p>
+        {:else if status === 3}
+            <p>{usernameError} has no repositories!</p>
+        {/if}
+    </div>
+{/if}
 
 <style>
-    .form-box{
+    .header{
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-flow: row nowrap;
-        margin-bottom: 10px;
+        flex-flow: column wrap;
+    }
+    .header > img{
+        width: 130px;
+        margin-bottom: 15px;
     }
     form{
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+    .input-box{
+        display: flex;
+        align-items: center;
+        position: relative;
         width: 70%;
+        min-width: 250px;
     }
     input{
         font-family: 'Segoe UI', sans-serif;
@@ -104,14 +121,14 @@
         border: 3px solid var(--gray);
 		border-radius: 10px;
         outline: 0;
-        width: inherit;
-        min-width: 250px;
+        width: 100%;
         transition: 0.5s;
     }
     .input-error{
         border: 1px solid red;
     }
     .alert-box{
+        margin-top: 20px;
         display: inline-flex;
         font-size: 1.5rem;
         font-style: italic;
@@ -128,15 +145,13 @@
         display: flex;
         align-items: center;
         font-weight: bold;
-        position: relative;
-        right: 15px;
     }
     .submit-button img{
         width: 23px;
     }
     .clear-button{
-        position: relative;
-        right: 40px;
+        position: absolute;
+        right: 20px;
         padding: 10px;
         border-radius: 20px;
         width: 25px;
@@ -148,8 +163,5 @@
     }
     .clear-button img{
         width: 11px;
-    }
-    .disappear{
-        visibility: hidden;
     }
 </style>
