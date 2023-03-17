@@ -15,19 +15,22 @@
 <main>
 	<header><SearchBar on:Response={getEvent}/></header>
 	<div><ManageLists allRepositories={repos}/></div>
-
+	<footer><Footer/></footer>
 </main>
-<footer><Footer/></footer>
+
 
 <style>
 	main{
-		padding: 30px;
-		position: relative;
+		padding: 40px;
+	}
+	div{
+		margin-bottom: 70px;
 	}
 	footer{
-		height: 255px;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
+		position: fixed; 
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
 	}
 </style>

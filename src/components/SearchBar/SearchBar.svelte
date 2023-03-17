@@ -97,7 +97,7 @@
     }
     .header > img{
         width: 130px;
-        margin-bottom: 15px;
+        margin-bottom: 30px;
     }
     form{
         display: flex;
