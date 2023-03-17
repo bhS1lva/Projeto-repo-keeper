@@ -115,4 +115,9 @@
     .no-list-image{
         margin: 10px 20px 40px 20px;
     }
+    @media(max-width: 390px){
+        .no-list-image{
+            width: 100%;
+        }
+    }
 </style>

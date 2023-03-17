@@ -71,4 +71,9 @@
         display: flex;
         flex-flow: column nowrap;
     }
+    @media(max-width: 640px){
+        .box{
+            width: 150px;
+        }
+    }
 </style>

@@ -61,19 +61,21 @@
                 class:input-error={status === 404 || status === 3}
             >
             <!-- {#if username} -->
-            <button
-                type="reset"
-                class="button clear-button"
-                title="Clear form"
-                on:click={() => userInput.focus()}
-            >
-                <img src="/assets/bold-x.svg" alt="search icon">
-            </button>
+            <div class="clear-box">
+                <button
+                    type="reset"
+                    class="button clear-button"
+                    title="Clear form"
+                    on:click={() => userInput.focus()}
+                >
+                    <img src="/assets/bold-x.svg" alt="search icon">
+                </button>
+            </div>
         </div>
         <!-- {/if} -->
         <button type="submit" class="button submit-button" title="Search">
             <img src="/assets/search.svg" alt="search icon">
-            Search
+            <p>Search</p>
         </button>
     </form>
 </div>
@@ -111,7 +113,7 @@
         align-items: center;
         position: relative;
         width: 70%;
-        min-width: 250px;
+        min-width: 200px;
     }
     input{
         font-family: 'Segoe UI', sans-serif;
@@ -150,8 +152,6 @@
         width: 23px;
     }
     .clear-button{
-        position: absolute;
-        right: 20px;
         padding: 10px;
         border-radius: 20px;
         width: 25px;
@@ -161,7 +161,18 @@
         justify-content: center;
         align-items: center;
     }
+    .clear-box{
+        position: absolute;
+        right: 10px;
+        padding: 10px;
+        background-color: #fff;
+    }
     .clear-button img{
         width: 11px;
+    }
+    @media(max-width: 460px){
+        .submit-button p{
+            display: none;
+        }
     }
 </style>

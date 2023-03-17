@@ -101,4 +101,13 @@
 	    background-color: pink;
         transform: rotate(0.13turn);
     }
+    @media(max-width: 460px){
+        .modal{
+            left: -155px;
+            top: 30px;
+        }
+        .side-box{
+            flex-direction: column;
+        }
+    }
 </style>

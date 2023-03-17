@@ -18,9 +18,13 @@
 
 <div class="box">
     <div class="title-box">
-        <div class="title"><h2>{title}</h2></div>
+        <h2>{title}</h2>
         {#if title === ''}
-            <button class="list-button close-new-list-box" on:click={() => dispatch('DeleteList')} title="Close new list form">
+            <button
+                class="list-button close-new-list-box"
+                on:click={() => dispatch('DeleteList')}
+                title="Close new list form"
+            >
                 <img src="/assets/bold-x.svg" alt="close new list form">
             </button>
             <div class="listName-form-box">
@@ -63,9 +67,7 @@
         justify-content: space-between;
         gap: 10px;
         position: relative;
-    }
-    .title{
-        overflow: hidden;
+        word-break: break-word;
     }
     .box{
         display: flex;
@@ -77,7 +79,7 @@
     .listName-form-box{
         display: flex;
         align-items: center;
-        gap: 20px;  
+        gap: 20px;
     }
     .listName-form-box input{
         height: 30px;
@@ -122,11 +124,21 @@
         align-items: center;
         position: absolute;
         left: -20px;
-        bottom: 24px;
+        bottom: 27px;
         width: 25px;
         height: 25px;	
     }
     .close-new-list-box img{
         width: 13px;
+    }
+    @media(max-width: 435px){
+        .listName-form-box > img{
+            display: none;
+        }
+    }   
+    @media(max-width: 370px){
+        .listName-form-box input{
+            width: 100%;
+        }
     }
 </style>
