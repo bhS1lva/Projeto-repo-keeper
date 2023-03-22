@@ -2,16 +2,12 @@
     import type IRepository from "../../interfaces/IRepository";
 
     import Modal from "./Modal.svelte";
-    import { createEventDispatcher } from "svelte";
+    import { removeItem } from "../../controllers/listController";
 
     export let repo: IRepository;
-    export let list: string;
 
-    const isRepoBlocked = typeof(repo.clicked) === 'boolean';
+    const isRepoNotBlocked = typeof(repo.clicked) === 'boolean';
 
-    const dispatch = createEventDispatcher<{
-        RemoveItem: {repo:IRepository, list:string}
-    }>();
 </script>
 
 <div class="repository">
@@ -20,35 +16,30 @@
         <p>({repo.owner})</p>
     </div>
     <div class="side-box">
-        {#if isRepoBlocked}
+        {#if isRepoNotBlocked}
             <button
                 class="function-button add-button"
                 class:remove-button={repo.clicked}
                 on:click={() => repo.clicked = !repo.clicked}
                 title="Show repository options"
-            >
+                >
                 <img src="/assets/plus.svg" alt="add item on list icon">
             </button>
             {:else}
                 <button 
                     class="function-button remove-button" 
-                    on:click={() => dispatch('RemoveItem', {repo, list})}
+                    on:click={() => removeItem(repo)}
                 >
                     <img src="/assets/plus.svg" alt="remove item from list icon">
                 </button>
         {/if}
-        {#if repo.clicked && isRepoBlocked}
+        {#if repo.clicked && isRepoNotBlocked}
             <div class="modal">
-                <Modal 
-                    {repo}
-                    on:AddItem
-                    on:CreateListModal
-                />
+                <Modal {repo}/>
             </div>
         {/if}
     </div>
 </div>
-
 
 <style>
     .modal{
@@ -100,14 +91,5 @@
     .remove-button{
 	    background-color: pink;
         transform: rotate(0.13turn);
-    }
-    @media(max-width: 460px){
-        .modal{
-            left: -155px;
-            top: 30px;
-        }
-        .side-box{
-            flex-direction: column;
-        }
     }
 </style>

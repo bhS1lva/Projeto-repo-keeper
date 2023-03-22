@@ -1,35 +1,46 @@
 <script lang="ts">    
-    import { createEventDispatcher } from "svelte";
-
+   
     import Repository from "../Repository/Repository.svelte";
     import type IRepository from "../../interfaces/IRepository";
+    import { createNewList, deleteList, showScope, gitHubContent } from "../../controllers/listController";
 
     export let title: string = '';
     export let content: IRepository[] = [];
+    export let isGitHubContent: boolean = false;
 
     let newListName = '';
 
-    const dispatch = createEventDispatcher<{
-		CreateList: string,
-        DeleteList: string,
-        CloseNewListScope
-	}>();
 </script>
 
+
 <div class="box">
+    <button on:click={() => console.log(title, content)}> mostra conteudo</button>
     <div class="title-box">
         <h2>{title}</h2>
-        {#if title === ''}
+        {#if title}
+            {#if !isGitHubContent}
+                <button class="list-button remove-button" on:click={() => deleteList(title)} title="Delete list button">
+                    <img src="/assets/trash.svg" alt="delete list icon">
+                </button>
+                <button class="list-button clear-button" on:click={() => content = []} title="Clear list button"> 
+                    <img src="/assets/clear.svg" alt="clear list icon"/>
+                </button>
+            {:else}
+                <button class="list-button remove-button" on:click={() => $gitHubContent = []} title="Delete list button">
+                    <img src="/assets/trash.svg" alt="delete list icon">
+                </button>
+            {/if}
+        {:else}
             <button
                 class="list-button close-new-list-box"
-                on:click={() => dispatch('DeleteList')}
+                on:click={() => $showScope = false}
                 title="Close new list form"
             >
                 <img src="/assets/bold-x.svg" alt="close new list form">
             </button>
             <div class="listName-form-box">
                 <img src="/assets/edit.svg" alt="name list icon">
-                <form on:submit|preventDefault={() => dispatch('CreateList', newListName)}>
+                <form on:submit|preventDefault={() => createNewList(newListName)}>
                     <!-- svelte-ignore a11y-autofocus -->
                     <input autofocus={true} bind:value={newListName}>
                     <button type="submit" class="list-button confirm-button" title="Confirm create new list">
@@ -38,24 +49,11 @@
                 </form>
             </div>
         {/if}
-        
-        {#if title}
-            <button class="list-button remove-button" on:click={() => dispatch('DeleteList', title)}>
-                <img src="/assets/trash.svg" alt="delete list icon">
-            </button>
-            <button class="list-button clear-button" on:click={() => console.log(content)}> 
-                <img src="/assets/clear.svg" alt="clear list icon"/>
-            </button>
-        {/if}
     </div>
 
     {#each content as item (item)}
         <Repository
             repo={item}
-            list={title}
-            on:AddItem
-            on:RemoveItem
-            on:CreateListModal
         />
     {/each}
 </div>

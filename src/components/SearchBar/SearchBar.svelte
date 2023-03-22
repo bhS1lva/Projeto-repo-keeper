@@ -1,20 +1,15 @@
 <script lang="ts">
     import type IRepository from "../../interfaces/IRepository";
 
-    import { createEventDispatcher } from "svelte";
+    import { gitHubContent } from "../../controllers/listController";
 
     let username: string;
     let usernameError: string;
     let userInput: HTMLInputElement;
     let status: number; 
 
-    const dispatch = createEventDispatcher<{
-		Response: IRepository[] | null;
-	}>();
-
     function notFound(errorCode: number, user: string){
         status = errorCode;
-        dispatch('Response', null)
         return usernameError = user;
     }
 
@@ -38,7 +33,7 @@
                         clicked: false
                     } as IRepository
                 });
-                dispatch('Response', repos);
+                $gitHubContent = repos;
             } else {
                 notFound(3, username)
             }            

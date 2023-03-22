@@ -2,38 +2,32 @@
 
     export let repo;
 
-    import { listController } from "../../controllers/listController";
+    import { mappedLists, utils, addItem } from "../../controllers/listController";
 
     let repoNotIn:string[];
 
-    repoNotIn = Object.keys(listController.container).filter(item => !repo.onList.includes(item));
+    $:repoNotIn = utils.getListReferences($mappedLists).filter(item => !repo.onList.includes(item));
 
-    import { createEventDispatcher } from "svelte";
+    import { showScope } from "../../controllers/listController";
 
-    import type IRepository from "../../interfaces/IRepository";
-
-    const dispatch = createEventDispatcher<{
-        AddItem: {repo: IRepository, list: string},
-        CreateListModal: string,
-    }>();
 </script>
 
 <div class="box">
     <div class="lists">
         {#if repoNotIn.length}
-            <button class="clickable" on:click={() => dispatch('CreateListModal')}>
+            <button class="clickable" on:click={() => $showScope = true}>
                 <p class="new-list">+create a new list</p>
             </button>
             <p>or</p>
             <h4>Add in a list:</h4>
-            {:else}
-                <h4>Create a new list to save the repository!</h4>
-                <button class="clickable" on:click={() => dispatch('CreateListModal')}>
-                    <p class="new-list">+create a new list</p>
-                </button>
+        {:else}
+            <h4>Create a new list to save the repository!</h4>
+            <button class="clickable" on:click={() => $showScope = true}>
+                <p class="new-list">+create a new list</p>
+            </button>
         {/if}
         {#each repoNotIn as list}
-            <button class="clickable" on:click={() => dispatch('AddItem', {repo, list})}>
+            <button class="clickable" on:click={() => addItem(repo, list)}>
                 <p>+{list}</p>
             </button>
         {/each }
@@ -65,6 +59,7 @@
         cursor: pointer;
     }
     .clickable:hover{
+        color: var(--green);
         text-decoration: underline;
     }
     .lists{
