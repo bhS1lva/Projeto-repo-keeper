@@ -5,7 +5,7 @@
 
     let username: string;
     let usernameError: string;
-    let userInput: HTMLInputElement;
+    let inputElement: HTMLInputElement;
     let status: number; 
 
     function notFound(errorCode: number, user: string){
@@ -14,7 +14,7 @@
     }
 
     async function onSubmit() {  
-        userInput.focus()
+        inputElement.focus()
 
         const searchRepo = await fetch(`https://api.github.com/users/${username.trim()}/repos`);
 
@@ -29,7 +29,7 @@
                         url: data.html_url,
                         owner: data.owner.login,
                         id: data.id,
-                        onList: [],
+                        inList: [],
                         clicked: false
                     } as IRepository
                 });
@@ -52,22 +52,20 @@
                 placeholder="Find a user"
                 required
                 bind:value={username}
-                bind:this={userInput}
+                bind:this={inputElement}
                 class:input-error={status === 404 || status === 3}
             >
-            <!-- {#if username} -->
             <div class="clear-box">
                 <button
                     type="reset"
                     class="button clear-button"
                     title="Clear form"
-                    on:click={() => userInput.focus()}
+                    on:click={() => inputElement.focus()}
                 >
-                    <img src="/assets/bold-x.svg" alt="search icon">
+                    <img src="/assets/bold-x.svg" alt="clear input">
                 </button>
             </div>
         </div>
-        <!-- {/if} -->
         <button type="submit" class="button submit-button" title="Search">
             <img src="/assets/search.svg" alt="search icon">
             <p>Search</p>
@@ -168,6 +166,11 @@
     @media(max-width: 460px){
         .submit-button p{
             display: none;
+        }
+    }
+    @media(max-width: 285px){
+        .alert-box p{
+            font-size: 1.4rem;
         }
     }
 </style>

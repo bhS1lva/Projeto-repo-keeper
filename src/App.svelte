@@ -1,9 +1,7 @@
 <script lang="ts">
-
-    import Footer from "./components/Footer/Footer.svelte";
-	import ManageLists from "./components/ManageLists/ManageLists.svelte";
     import SearchBar from "./components/SearchBar/SearchBar.svelte";
-
+	import ManageLists from "./components/List/ManageLists.svelte";
+	import Footer from "./components/Footer/Footer.svelte";
 </script>
 
 <main>
@@ -11,7 +9,6 @@
 	<div><ManageLists/></div>
 	<footer><Footer/></footer>
 </main>
-
 
 <style>
 	main{

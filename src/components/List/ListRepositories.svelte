@@ -1,28 +1,26 @@
 <script lang="ts">    
-   
     import Repository from "../Repository/Repository.svelte";
-    import type IRepository from "../../interfaces/IRepository";
-    import { createNewList, deleteList, showScope, gitHubContent } from "../../controllers/listController";
 
-    export let title: string = '';
+    import type IRepository from "../../interfaces/IRepository";
+
+    import { createNewList, deleteList, showScope, gitHubContent, clearList } from "../../controllers/listController";
+
+    export let listName: string = '';
     export let content: IRepository[] = [];
     export let isGitHubContent: boolean = false;
 
     let newListName = '';
-
 </script>
 
-
 <div class="box">
-    <button on:click={() => console.log(title, content)}> mostra conteudo</button>
     <div class="title-box">
-        <h2>{title}</h2>
-        {#if title}
+        <h2>{listName}</h2>
+        {#if listName}
             {#if !isGitHubContent}
-                <button class="list-button remove-button" on:click={() => deleteList(title)} title="Delete list button">
+                <button class="list-button remove-button" on:click={() => deleteList(listName)} title="Delete list button">
                     <img src="/assets/trash.svg" alt="delete list icon">
                 </button>
-                <button class="list-button clear-button" on:click={() => content = []} title="Clear list button"> 
+                <button class="list-button clear-button" on:click={() => clearList(listName)} title="Clear list button"> 
                     <img src="/assets/clear.svg" alt="clear list icon"/>
                 </button>
             {:else}

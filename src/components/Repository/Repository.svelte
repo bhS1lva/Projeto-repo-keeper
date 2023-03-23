@@ -1,13 +1,13 @@
 <script lang="ts">
+    import Modal from "./Modal.svelte";
+
     import type IRepository from "../../interfaces/IRepository";
 
-    import Modal from "./Modal.svelte";
     import { removeItem } from "../../controllers/listController";
 
     export let repo: IRepository;
 
     const isRepoNotBlocked = typeof(repo.clicked) === 'boolean';
-
 </script>
 
 <div class="repository">
@@ -22,13 +22,14 @@
                 class:remove-button={repo.clicked}
                 on:click={() => repo.clicked = !repo.clicked}
                 title="Show repository options"
-                >
+            >
                 <img src="/assets/plus.svg" alt="add item on list icon">
             </button>
             {:else}
                 <button 
                     class="function-button remove-button" 
                     on:click={() => removeItem(repo)}
+                    title={`Remove repository ${repo.name} from ${repo.inList[0]}`}
                 >
                     <img src="/assets/plus.svg" alt="remove item from list icon">
                 </button>
@@ -91,5 +92,14 @@
     .remove-button{
 	    background-color: pink;
         transform: rotate(0.13turn);
+    }
+    @media(max-width: 460px){
+        .modal{
+            left: -155px;
+            top: 30px;
+        }
+        .side-box{
+            flex-direction: column;
+        }
     }
 </style>

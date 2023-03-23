@@ -1,15 +1,11 @@
 <script lang="ts">
+    import { mappedLists, utils, addItem, showScope } from "../../controllers/listController";
 
     export let repo;
 
-    import { mappedLists, utils, addItem } from "../../controllers/listController";
+    let repoNotIn:string[] = [];
 
-    let repoNotIn:string[];
-
-    $:repoNotIn = utils.getListReferences($mappedLists).filter(item => !repo.onList.includes(item));
-
-    import { showScope } from "../../controllers/listController";
-
+    $:repoNotIn = utils.getListReferences($mappedLists).filter(item => !repo.inList.includes(item));
 </script>
 
 <div class="box">
@@ -69,6 +65,10 @@
     @media(max-width: 640px){
         .box{
             width: 150px;
+            font-size: 15px;
+        }
+        .clickable{
+            font-size: 15px;
         }
     }
 </style>
