@@ -4,17 +4,8 @@
     import { utils, mappedLists, gitHubContent, showScope, createNewList } from "../../controllers/listController";
     import { localStorageController } from "../../controllers/localStorageController";
 
-    $gitHubContent = [
-        {name: 'portfolio', url:'www.google.com', owner: 'bhS1lva', id:1, inList: [], clicked: false},
-        {name: 'conexao api', url:'www.google.com', owner: 'bhS1lva', id:2, inList: [], clicked: false},
-        {name: 'licao', url:'www.google.com', owner: 'bhS1lva', id:3, inList: [], clicked:false}
-    ]
-
     if(localStorage.length) localStorageController.render()
 </script>
-
-<button on:click={() => console.log($mappedLists)}>ver mapped</button>
-<button on:click={() => console.log($gitHubContent)}>ver github</button>
 
 <div class="new-list-box">
     <button on:click={() => $showScope = true} title="Create a new list">
