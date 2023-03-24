@@ -1,107 +1,39 @@
-# This repo is no longer maintained. Consider using `npm init vite` and selecting the `svelte` option or — if you want a full-fledged app framework and don't mind using pre-1.0 software — use [SvelteKit](https://kit.svelte.dev), the official application framework for Svelte.
+# Projeto Repo Keeper - Guardador de repositórios
 
----
+![badge em desenvolvimento](https://user-images.githubusercontent.com/101880543/205785366-88c0d43a-2dc4-4ad0-a362-6e0b6fb8b089.png)
 
-# svelte app
+![badge versao](https://user-images.githubusercontent.com/119939367/227383641-0be8fcac-5f55-42ae-a5ab-9b13e37bf676.png)
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+<p align = "center">
+  <img src="https://user-images.githubusercontent.com/119939367/227414429-8dab3e50-504d-4ad4-8303-ce33f73351e7.gif"/>
+</p>
+<p align = "center">Primeiro design de uso feito no Figma.</p>
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+# 📝 Sobre o projeto
 
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
+* Projeto pessoal;
+* Trata-se de um "guardador de repositórios", assim como as listas do GitHub;
+* Com ele as referências aos repositórios ficam mais fáceis de serem organizadas e visualizadas;
+* O acesso às informações dos repositórios dos usuários é feita a partir da API do GitHub;
+* As informações das listas ficam registradas no localStorage do browser para que o conteúdo não seja perdido;
+* <strong>Tecnologias usadas</strong>: `🔶 Svelte` `🔷 TypeScript` `🟦 CSS`;
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+<img align="right" width="250" src="https://user-images.githubusercontent.com/119939367/227383677-c4c3549e-5ec9-42fe-848e-e63a0e86003a.gif">
 
+## Versões
 
-## Get started
+### 1.0 
 
-Install the dependencies...
+* Consulta a API de repositórios do GitHub;
+* Armazenamento de informações no localStorage do browser;
 
-```bash
-cd svelte-app
-npm install
-```
+# 👥 Colaboradores
 
-...then start [Rollup](https://rollupjs.org):
+* Bruno Henrique.
 
-```bash
-npm run dev
-```
+# 🛎 Considerações
 
-Navigate to [localhost:8080](http://localhost:8080). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+* É o meu primeiro projeto utilizando Svelte e manipulando o localStorage do browser!
+* Caso encontre <strong>bugs</strong> ou tenha <strong>sugestões</strong>, estou à disposição.
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
-
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
-
-## Building and running in production mode
-
-To create an optimised version of the app:
-
-```bash
-npm run build
-```
-
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
-
-
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
-```
-
-## Using TypeScript
-
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
-
-```bash
-node scripts/setupTypeScript.js
-```
-
-Or remove the script via:
-
-```bash
-rm scripts/setupTypeScript.js
-```
-
-If you want to use `baseUrl` or `path` aliases within your `tsconfig`, you need to set up `@rollup/plugin-alias` to tell Rollup to resolve the aliases. For more info, see [this StackOverflow question](https://stackoverflow.com/questions/63427935/setup-tsconfig-path-in-svelte).
-
-## Deploying to the web
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-vercel deploy --name my-project
-```
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+# 🔗 Acesse em: <a href="">Repo Keeper</a>
