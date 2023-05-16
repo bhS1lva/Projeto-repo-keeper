@@ -49,7 +49,7 @@
         <div class="input-box">
             <input
                 type="text"
-                placeholder="Find a user"
+                placeholder="Find a user on GitHub"
                 required
                 bind:value={username}
                 bind:this={inputElement}
