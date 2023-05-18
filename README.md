@@ -1,8 +1,8 @@
 # Projeto Repo Keeper - Guardador de repositórios
 
-![badge em desenvolvimento](https://user-images.githubusercontent.com/101880543/205785366-88c0d43a-2dc4-4ad0-a362-6e0b6fb8b089.png)
+![badge em desenvolvimento](https://github.com/bhS1lva/Projeto-Repo-Keeper/assets/101880543/2fe0a898-2609-4962-968b-9f1b14a1a613)
 
-![badge versao](https://user-images.githubusercontent.com/119939367/227383641-0be8fcac-5f55-42ae-a5ab-9b13e37bf676.png)
+![badge versao](https://github.com/bhS1lva/Projeto-Repo-Keeper/assets/101880543/4af4e5ef-4cd4-49f7-8250-278b484bb4f4)
 
 <p align = "center">
   <img src="https://user-images.githubusercontent.com/119939367/227414429-8dab3e50-504d-4ad4-8303-ce33f73351e7.gif"/>
